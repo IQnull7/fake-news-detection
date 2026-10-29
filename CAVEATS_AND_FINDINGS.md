@@ -59,6 +59,8 @@ This document tracks all project constraints, critical caveats (data, modeling, 
     - Citations and literature alignment follow IEEE style across documentation and report preparation.
 19. **Ethical Framing:**
     - Misinformation detection tools serve as decision-support / flagging mechanisms for reviewers and readers, not definitive truth arbiters.
+20. **Infrastructure & Platform Constraint (Zero Hugging Face Dependency):**
+    - Under explicit instruction, Hugging Face Hub, datasets, spaces, and hosting will NOT be used. Models, datasets, demos, and evaluations will be managed strictly via local disk (`models/`), GitHub, Kaggle, and local app runtimes (Streamlit/Gradio).
 
 ---
 
