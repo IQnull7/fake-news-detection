@@ -18,6 +18,12 @@ ipykernel>=6.25.0
 # Explainability & Auditing
 lime>=0.2.0
 
+# Deep Learning (Self-Contained PyTorch)
+torch>=2.0.0
+
+# Interactive Web Demo (Streamlit)
+streamlit>=1.30.0
+
 # Optional / Future Phase Modules
 xgboost>=2.0.0
 

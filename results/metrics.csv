@@ -8,3 +8,20 @@ TF-IDF + Linear SVM,val,0.9894,0.988,0.9927,0.9903,0.999
 TF-IDF + Random Forest,val,0.9723,0.9596,0.9911,0.9751,0.997
 TF-IDF + XGBoost,val,0.9874,0.9861,0.9911,0.9886,0.9988
 TF-IDF + Logistic Regression,test,0.9862,0.9842,0.9908,0.9875,0.9989
+BiLSTM (PyTorch),test,0.9787,0.983,0.978,0.9805,0.9976
+Majority baseline,test_in_domain,0.5476,0.5476,1.0,0.7077,
+Majority baseline,cross_dataset_liar,0.5635,0.5635,1.0,0.7208,
+Title-only LR,test_in_domain,0.9447,0.9328,0.9688,0.9505,
+Title-only LR,cross_dataset_liar,0.4388,0.5058,0.1835,0.2693,
+TF-IDF + Naive Bayes,test_in_domain,0.9573,0.9656,0.956,0.9608,
+TF-IDF + Naive Bayes,cross_dataset_liar,0.5036,0.5651,0.5168,0.5399,
+TF-IDF + Logistic Regression,test_in_domain,0.9862,0.9842,0.9908,0.9875,
+TF-IDF + Logistic Regression,cross_dataset_liar,0.4791,0.6023,0.2227,0.3252,
+TF-IDF + Linear SVM,test_in_domain,0.9908,0.9905,0.9927,0.9916,
+TF-IDF + Linear SVM,cross_dataset_liar,0.4736,0.6298,0.1597,0.2547,
+TF-IDF + Random Forest,test_in_domain,0.9702,0.9592,0.9876,0.9732,
+TF-IDF + Random Forest,cross_dataset_liar,0.5146,0.5858,0.4734,0.5236,
+TF-IDF + XGBoost,test_in_domain,0.9845,0.982,0.9898,0.9859,
+TF-IDF + XGBoost,cross_dataset_liar,0.4522,0.6667,0.056,0.1034,
+BiLSTM (PyTorch),test_in_domain,0.9787,0.983,0.978,0.9805,
+BiLSTM (PyTorch),cross_dataset_liar,0.4617,0.625,0.112,0.19,

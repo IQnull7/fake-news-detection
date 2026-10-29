@@ -143,3 +143,44 @@ This document tracks all project constraints, critical caveats (data, modeling, 
     - False Negatives (29): Real news op-eds written in informal or first-person rhetoric.
   - **Explainability Artifacts:** Generated `results/figures/feature_importance_top20.png` and documented report in `results/error_analysis.md`. Checkpoint passed.
 
+### Phase C: Deep Learning Model
+- **Module 8 (Self-Contained PyTorch BiLSTM):**
+  - **Architecture:** 2-layer Bidirectional LSTM with 128-dim embeddings, 128-dim hidden states, spatial dropout (0.3), dual pooling (Average Pooling + Max Pooling = 512 dims), and dense linear classification head.
+  - **Zero Hugging Face Dependency:** Vocabulary (25,000 tokens) built purely on training text (`text_light`); model trained from scratch with PyTorch.
+  - **Convergence:**
+    - Epoch 1: Train Loss 0.2249 | Val Loss 0.0916 | Val Acc 96.89%
+    - Epoch 2: Train Loss 0.0773 | Val Loss 0.0820 | Val Acc 97.26%
+  - **Hold-out Test Performance:** Accuracy 97.87%, Precision 98.30%, Recall 97.80%, F1 0.9805, ROC-AUC 0.9976.
+  - **Latency Checkpoint:** Single article inference executes in 12.73 ms (<2s limit). Checkpoint passed.
+
+### Phase D: Generalization & Reliability Audits
+- **Module 9 (Cross-Validation Reliability):**
+  - 5-Fold Stratified Cross-Validation on Logistic Regression:
+    - Accuracy:  `0.9889 ± 0.0018`
+    - Precision: `0.9865 ± 0.0038`
+    - Recall:    `0.9933 ± 0.0009`
+    - F1 Score:  `0.9899 ± 0.0016`
+    - ROC-AUC:   `0.9990 ± 0.0003`
+  - Multi-seed check across seeds `[42, 101, 2024, 7, 999]` yielded zero variance on the convex linear boundary. Standard deviation is exceptionally small (`<0.002`), demonstrating that high performance is not a lucky seed artifact (Caveat 13).
+- **Module 10 (Cross-Dataset Generalization Stress Test):**
+  - Evaluated all trained models against the out-of-domain **LIAR Benchmark Dataset** (1,267 political statements) with zero retraining or fine-tuning.
+  - **Empirical Findings (Caveats 12 & 14):**
+    - Logistic Regression F1 dropped from 98.75% to 32.52% (Drop: 0.6623).
+    - Linear SVM F1 dropped from 99.16% to 25.47% (Drop: 0.7369).
+    - BiLSTM F1 dropped from 98.05% to 19.00% (Drop: 0.7905).
+    - Naive Bayes exhibited the highest cross-domain resilience with F1 53.99% (Drop: 0.4209).
+  - **Scientific Explanation:**
+    1. *Format Shift:* Full-length 400-word journalistic articles vs. isolated 15-word debate soundbites.
+    2. *Task Shift:* Stylistic fakeness (sensationalist blog formatting) vs. objective political fact-checking (PolitiFact verifications of actual statements by public officials).
+    3. *Temporal & Source Shift:* 2016-2017 election cycle news vs. 2007-2016 multi-source political rhetoric.
+
+### Phase E: Interactive Interface & Delivery
+- **Module 11 (Interactive Streamlit Demo):**
+  - Production application developed in `app/app.py`.
+  - Single-load caching (`@st.cache_resource`) for fast sub-second predictions.
+  - Input length validation (<10 words friendly warning, handling empty strings).
+  - Local feature contribution visualizer highlighting top words driving Real vs. Fake probability.
+  - Pre-loaded with 4 representative test articles (real political news, viral conspiracy, diplomatic wire, shocking clickbait) and custom user input. Checkpoint passed (5/5 tests successful with zero crashes).
+- **Module 12 & 13 (Showcase & Documentation):**
+  - Complete report and benchmark tables synchronized across `results/metrics.csv`, `results/final_results_table.csv`, and `README.md`.
+
