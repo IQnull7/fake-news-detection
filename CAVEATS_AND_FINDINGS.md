@@ -71,8 +71,25 @@ This document tracks all project constraints, critical caveats (data, modeling, 
 ### Phase A: Data Preparation
 - **Module 0 (Setup):**
   - Initialized modular architecture, standard directories, global configuration (`SEED = 42`), and isolated virtual environment.
+  - Documented initial 19 caveats + Caveat 20 strictly barring Hugging Face services/uploads/hubs.
 - **Module 1 (Load & Inspect):**
-  - *To be recorded upon dataset acquisition and initial EDA.*
+  - **Dataset Verified:** Combined 44,898 total articles (Real: 21,417 / 47.70%, Fake: 23,481 / 52.30%).
+  - **Missing Values:** Zero null cells across all 4 raw columns (`title`, `text`, `subject`, `date`).
+  - **Empty Text Bodies:** 631 articles contain empty strings or whitespace-only text bodies that require filtering in Module 2.
+  - **Empirical Confirmation of Caveat 2 (`subject` shortcut):**
+    - Real classes map strictly to `politicsNews` (11,272) and `worldnews` (10,145).
+    - Fake classes map strictly to `News` (9,050), `politics` (6,841), `left-news` (4,459), `Government News` (1,570), `US_News` (783), and `Middle-east` (778).
+    - **Cross-class overlap is strictly 0.0%.** Retaining `subject` would completely invalidate model authenticity.
+  - **Empirical Confirmation of Caveat 1 (Source fingerprinting):**
+    - >99% of Real articles begin with agency datelines (e.g. `CITY (Reuters) - `).
+    - Failure to strip these patterns enables trivial classifier convergence on agency names rather than content semantics.
+  - **Deliverables Generated:**
+    - `notebooks/01_load_and_inspect.ipynb`
+    - Publication-ready visualizations in `results/figures/`:
+      - `class_balance.png`
+      - `subject_leakage.png`
+      - `text_length_distribution.png`
+      - `reuters_leakage_rate.png`
 - **Module 2 (Cleaning & Leakage Removal):**
   - *To be recorded upon regex source stripping and deduplication.*
 - **Module 3 (Splits):**
