@@ -1,0 +1,10 @@
+model,split,accuracy,precision,recall,f1,roc_auc
+Majority baseline,val,0.5476,0.5476,1.0,0.7077,0.5
+Title-only LR,val,0.9466,0.9344,0.9707,0.9522,0.9871
+First-5-words LR,val,0.8815,0.8902,0.8939,0.8921,0.9501
+TF-IDF + Naive Bayes,val,0.9529,0.9527,0.9618,0.9572,0.9885
+TF-IDF + Logistic Regression,val,0.9867,0.9845,0.9914,0.9879,0.9983
+TF-IDF + Linear SVM,val,0.9894,0.988,0.9927,0.9903,0.999
+TF-IDF + Random Forest,val,0.9723,0.9596,0.9911,0.9751,0.997
+TF-IDF + XGBoost,val,0.9874,0.9861,0.9911,0.9886,0.9988
+TF-IDF + Logistic Regression,test,0.9862,0.9842,0.9908,0.9875,0.9989

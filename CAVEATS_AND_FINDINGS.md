@@ -116,3 +116,30 @@ This document tracks all project constraints, critical caveats (data, modeling, 
     - `Val ∩ Test`: 0 overlapping articles.
   - **Deliverables:** Saved `data/processed/train.csv`, `val.csv`, and `test.csv`; logged audit to `results/split_summary.json`. Checkpoint passed.
 
+### Phase B: Classical Models & Audits
+- **Module 4 (Sanity Baselines):**
+  - **Majority Baseline:** Accuracy 54.76%, F1 0.7077, ROC-AUC 0.5000 (reflects 54.76% positive class balance).
+  - **Title-Only LR:** Accuracy 94.66%, F1 0.9522, ROC-AUC 0.9871. Demonstrates that headline style (sensational clickbait vs. formal reporting) carries substantial discriminative signal on its own.
+  - **First-5-Words LR:** Accuracy 88.15%, F1 0.8921, ROC-AUC 0.9501.
+  - **Checkpoint Verification:** In raw data with intact wire headers, first-5-words scored >99%. After regex dateline neutralization, accuracy dropped significantly to 88.15%, and inspection confirmed top features reflect conversational lead pronouns (`you`, `we`, `our`) vs. formal journalistic leads (`president donald`, `minister`), rather than wire agency tags.
+- **Module 5 & 6 (TF-IDF + Classical Classifiers & Reusable Evaluation):**
+  - Feature extraction: `TfidfVectorizer(ngram_range=(1,2), max_features=50,000, sublinear_tf=True)` fit strictly on `train.csv`.
+  - Hyperparameter tuning strictly on validation set:
+    - **Multinomial Naive Bayes (alpha=0.01):** Val Acc 95.29%, Val F1 0.9572, ROC-AUC 0.9885
+    - **Logistic Regression (C=10.0):** Val Acc 98.67%, Val F1 0.9879, ROC-AUC 0.9983
+    - **Linear SVM (Calibrated, C=2.0):** Val Acc 98.94%, Val F1 0.9903, ROC-AUC 0.9990
+    - **Random Forest (n=150, depth=35):** Val Acc 97.23%, Val F1 0.9751, ROC-AUC 0.9970
+    - **XGBoost (n=150, depth=6):** Val Acc 98.74%, Val F1 0.9886, ROC-AUC 0.9988
+  - All classical models significantly outperformed the Module 4 baselines. End-to-end inference pipelines verified on raw text strings.
+- **Module 7 (Leakage & Explainability Audit):**
+  - **Feature Weight Inspection:**
+    - Top Fake News indicators: `via`, `read more`, `read`, `featured image`, `image via`, `this`, `gop`.
+    - Top Real News indicators: `said`, `said on`, `president donald`, `on wednesday`, `on thursday`, `on tuesday`.
+    - Zero agency tokens (`reuters`, wire codes) present in top weights.
+  - **Hold-out Test Evaluation (Logistic Regression):**
+    - Accuracy: 98.62%, Precision: 98.42%, Recall: 99.08%, F1: 0.9875, ROC-AUC: 0.9989.
+  - **Error Analysis (79 misclassified test samples / 1.38% error rate):**
+    - False Positives (50): Fake articles verbatim-quoting official statements or speeches.
+    - False Negatives (29): Real news op-eds written in informal or first-person rhetoric.
+  - **Explainability Artifacts:** Generated `results/figures/feature_importance_top20.png` and documented report in `results/error_analysis.md`. Checkpoint passed.
+

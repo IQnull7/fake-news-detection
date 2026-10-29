@@ -1,0 +1,4 @@
+model,split,accuracy,precision,recall,f1,roc_auc
+Majority baseline,val,0.5476,0.5476,1.0,0.7077,0.5
+Title-only LR,val,0.9466,0.9344,0.9707,0.9522,0.9871
+First-5-words LR,val,0.8815,0.8902,0.8939,0.8921,0.9501
