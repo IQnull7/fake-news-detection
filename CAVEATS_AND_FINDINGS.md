@@ -91,7 +91,18 @@ This document tracks all project constraints, critical caveats (data, modeling, 
       - `text_length_distribution.png`
       - `reuters_leakage_rate.png`
 - **Module 2 (Cleaning & Leakage Removal):**
-  - *To be recorded upon regex source stripping and deduplication.*
+  - **Initial Raw Rows:** 44,898
+  - **Deduplication:**
+    - Dropped 5,793 exact duplicates on `(title, text)`.
+    - Dropped 459 additional duplicates on `text` alone.
+  - **Short / Empty Text Removal:** Dropped 163 articles with fewer than 10 words.
+  - **Total Rows Dropped:** 6,415 rows (14.29% of raw data).
+  - **Metadata Pruning:** Permanently dropped `subject` and `date` columns to prevent 100% shortcut leakage.
+  - **Agency Fingerprint Neutralization:**
+    - Regex applied for leading wire datelines (`^[\\s\\w\\.,\\/\\-\\']+\\((?:Reuters|AP|AFP)\\)\\s*[-–—]?\\s*`) and standalone agency tokens.
+    - Post-cleaning audit: **`reuters` count in `text_clean` is exactly 0 for both Real and Fake**; **`reuters` count in `text_light` is exactly 0 for both Real and Fake**.
+  - **Final Cleaned Dataset:** 38,483 rows (Real: 21,191 [55.07%], Fake: 17,292 [44.93%]).
+  - **Deliverable:** Serialized to `data/processed/clean.csv` with dual representations (`text_clean` for classical TF-IDF, `text_light` for contextual deep learning). Checkpoint passed.
 - **Module 3 (Splits):**
   - *To be recorded upon stratified split generation.*
 

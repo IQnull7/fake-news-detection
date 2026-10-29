@@ -1,0 +1,28 @@
+{
+  "initial_count": 44898,
+  "duplicates_title_text_removed": 5793,
+  "duplicates_text_removed": 459,
+  "short_texts_removed": 163,
+  "columns_dropped": [
+    "subject",
+    "date"
+  ],
+  "empty_after_cleaning_removed": 0,
+  "final_count": 38483,
+  "final_class_counts": {
+    "1": 21191,
+    "0": 17292
+  },
+  "final_class_proportions": {
+    "1": 0.5506587324273056,
+    "0": 0.44934126757269444
+  },
+  "reuters_in_text_clean": {
+    "0": 0,
+    "1": 0
+  },
+  "reuters_in_text_light": {
+    "0": 0,
+    "1": 0
+  }
+}
