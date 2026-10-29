@@ -95,14 +95,24 @@ This document tracks all project constraints, critical caveats (data, modeling, 
   - **Deduplication:**
     - Dropped 5,793 exact duplicates on `(title, text)`.
     - Dropped 459 additional duplicates on `text` alone.
+    - Dropped 272 post-cleaning duplicates on `text_clean` / `text_light` (articles differing only by stripped agency headers).
   - **Short / Empty Text Removal:** Dropped 163 articles with fewer than 10 words.
-  - **Total Rows Dropped:** 6,415 rows (14.29% of raw data).
+  - **Total Rows Dropped:** 6,687 rows (14.89% of raw data).
   - **Metadata Pruning:** Permanently dropped `subject` and `date` columns to prevent 100% shortcut leakage.
   - **Agency Fingerprint Neutralization:**
     - Regex applied for leading wire datelines (`^[\\s\\w\\.,\\/\\-\\']+\\((?:Reuters|AP|AFP)\\)\\s*[-–—]?\\s*`) and standalone agency tokens.
     - Post-cleaning audit: **`reuters` count in `text_clean` is exactly 0 for both Real and Fake**; **`reuters` count in `text_light` is exactly 0 for both Real and Fake**.
-  - **Final Cleaned Dataset:** 38,483 rows (Real: 21,191 [55.07%], Fake: 17,292 [44.93%]).
+  - **Final Cleaned Dataset:** 38,211 rows (Real: 20,924 [54.76%], Fake: 17,287 [45.24%]).
   - **Deliverable:** Serialized to `data/processed/clean.csv` with dual representations (`text_clean` for classical TF-IDF, `text_light` for contextual deep learning). Checkpoint passed.
-- **Module 3 (Splits):**
-  - *To be recorded upon stratified split generation.*
+- **Module 3 (Train/Val/Test Stratified Split):**
+  - **Partitioning Strategy:** Stratified 70% Train / 15% Validation / 15% Test with global `SEED = 42`.
+  - **Split Counts:**
+    - Train: 26,747 rows (Real: 54.76%, Fake: 45.24%)
+    - Val: 5,732 rows (Real: 54.76%, Fake: 45.24%)
+    - Test: 5,732 rows (Real: 54.76%, Fake: 45.24%)
+  - **Leakage & Overlap Audit:**
+    - `Train ∩ Val`: 0 overlapping articles.
+    - `Train ∩ Test`: 0 overlapping articles.
+    - `Val ∩ Test`: 0 overlapping articles.
+  - **Deliverables:** Saved `data/processed/train.csv`, `val.csv`, and `test.csv`; logged audit to `results/split_summary.json`. Checkpoint passed.
 

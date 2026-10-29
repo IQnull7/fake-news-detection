@@ -8,14 +8,15 @@
     "date"
   ],
   "empty_after_cleaning_removed": 0,
-  "final_count": 38483,
+  "duplicates_post_cleaning_removed": 272,
+  "final_count": 38211,
   "final_class_counts": {
-    "1": 21191,
-    "0": 17292
+    "1": 20924,
+    "0": 17287
   },
   "final_class_proportions": {
-    "1": 0.5506587324273056,
-    "0": 0.44934126757269444
+    "1": 0.5475910078249718,
+    "0": 0.4524089921750281
   },
   "reuters_in_text_clean": {
     "0": 0,
